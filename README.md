@@ -65,13 +65,13 @@
 Протестируйте сайт
 `curl -v <публичный IP балансера>:80` 
 
-Балансировщик 
+## Балансировщик 
 
 ![ЦелевыегруппыГруппыбекендов](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A6%D0%B5%D0%BB%D0%B5%D0%B2%D1%8B%D0%B5%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B%D0%B1%D0%B5%D0%BA%D0%B5%D0%BD%D0%B4%D0%BE%D0%B2.png)
 ![ГруппыБезопасности](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B%D0%91%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D0%B8.png)
 ![БалансировщикИHTTPРоутер](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%91%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D0%B8%D1%80%D0%BE%D0%B2%D1%89%D0%B8%D0%BA%D0%98HTTP%D0%A0%D0%BE%D1%83%D1%82%D0%B5%D1%80.png)
 
-Доступность сайта
+## Доступность сайта
 
 ![ДоступностьСайтаCurl](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%94%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%BD%D0%BE%D1%81%D1%82%D1%8C%D0%A1%D0%B0%D0%B9%D1%82%D0%B0Curl.png)
 ![Сайт](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A1%D0%B0%D0%B9%D1%82.png)
@@ -82,10 +82,17 @@
 
 Настройте дешборды с отображением метрик, минимальный набор — по принципу USE (Utilization, Saturation, Errors) для CPU, RAM, диски, сеть, http запросов к веб-серверам. Добавьте необходимые tresholds на соответствующие графики.
 
+![ZabbixМониторингВсехVM](https://github.com/Easyjetz/diplom-project/blob/main/screen/Zabbix%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%D0%92%D1%81%D0%B5%D1%85VM.png)
+![ZabbixDashboard](https://github.com/Easyjetz/diplom-project/blob/main/screen/ZabbixDashboard.png)
+
+
 ### Логи
 Cоздайте ВМ, разверните на ней Elasticsearch. Установите filebeat в ВМ к веб-серверам, настройте на отправку access.log, error.log nginx в Elasticsearch.
 
 Создайте ВМ, разверните на ней Kibana, сконфигурируйте соединение с Elasticsearch.
+
+![ОтправкаЛогов](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%9E%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0%D0%9B%D0%BE%D0%B3%D0%BE%D0%B2.png)
+
 
 ### Сеть
 Разверните один VPC. Сервера web, Elasticsearch поместите в приватные подсети. Сервера Zabbix, Kibana, application load balancer определите в публичную подсеть.
@@ -96,8 +103,10 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 Исходящий доступ в интернет для ВМ внутреннего контура через [NAT-шлюз](https://yandex.cloud/ru/docs/vpc/operations/create-nat-gateway).
 
+![ГруппыБезопасности](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B%D0%91%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D0%B8.png)
+
+
 ### Резервное копирование
 Создайте snapshot дисков всех ВМ. Ограничьте время жизни snaphot в неделю. Сами snaphot настройте на ежедневное копирование.
 
-
-
+![СнимкиДисков](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BA%D0%B8%D0%94%D0%B8%D1%81%D0%BA%D0%BE%D0%B2.png)
