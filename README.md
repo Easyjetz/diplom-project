@@ -37,6 +37,20 @@
 
 ![РазверткаИнфрыTerraformСкриншот1](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A0%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D0%BA%D0%B0%D0%98%D0%BD%D1%84%D1%80%D1%8BTerraform%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%821.png)
 ![РазверткаИнфрыTerraformСкриншот2](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A0%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D0%BA%D0%B0%D0%98%D0%BD%D1%84%D1%80%D1%8BTerraform%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%822.png)
+
+- alb_external_ip = "158.160.192.171"
+- bastion_external_ip = "158.160.57.181"
+- bastion_fqdn = "bastion.ru-central1.internal"
+- elastic_fqdn = "elastic.ru-central1.internal"
+- elastic_ip = "10.0.1.27"
+- kibana_fqdn = "kibana.ru-central1.internal"
+- kibana_ip = "89.169.146.144"
+- web_a_fqdn = "web-a.ru-central1.internal"
+- web_b_fqdn = "web-b.ru-central1.internal"
+- zabbix_fqdn = "zabbix.ru-central1.internal"
+- zabbix_ip = "158.160.96.162"
+
+
 ![РазвернутаяИнфраструктура](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A0%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D0%B0%D1%8F%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0.png)
 ![УстановкаСофтаСкриншот1](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%D0%A1%D0%BE%D1%84%D1%82%D0%B0%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%821.png)
 ![УстановкаСофтаСкриншот2](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%D0%A1%D0%BE%D1%84%D1%82%D0%B0%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%822.png)
