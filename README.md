@@ -1,51 +1,96 @@
-# Дипломный проект: Отказоустойчивая инфраструктура в Yandex Cloud
 
-## Требования
-1. Сервисный аккаунт с правами editor
-2. SSH-ключ для доступа к ВМ
-3. Учетные данные Yandex Cloud (cloud_id и folder_id)
+#  Дипломная работа по профессии «Системный администратор»
+
+Содержание
+==========
+* [Задача](#Задача)
+* [Инфраструктура](#Инфраструктура)
+    * [Сайт](#Сайт)
+    * [Мониторинг](#Мониторинг)
+    * [Логи](#Логи)
+    * [Сеть](#Сеть)
+    * [Резервное копирование](#Резервное-копирование)
+    * [Дополнительно](#Дополнительно)
+* [Выполнение работы](#Выполнение-работы)
+* [Критерии сдачи](#Критерии-сдачи)
+* [Как правильно задавать вопросы дипломному руководителю](#Как-правильно-задавать-вопросы-дипломному-руководителю) 
+
+---------
+
+## Задача
+Ключевая задача — разработать отказоустойчивую инфраструктуру для сайта, включающую мониторинг, сбор логов и резервное копирование основных данных. Инфраструктура должна размещаться в [Yandex Cloud](https://cloud.yandex.com/) и отвечать минимальным стандартам безопасности: запрещается выкладывать токен от облака в git. Используйте [инструкцию](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart#get-credentials).
+
+**Перед началом работы над дипломным заданием изучите [Инструкция по экономии облачных ресурсов](https://github.com/netology-code/devops-materials/blob/master/cloudwork.MD).**
 
 ## Инфраструктура
-- Бастион-хост (публичный доступ)
-- 2 веб-сервера (nginx, приватные)
-- Сервер Zabbix (мониторинг)
-- Сервер Elasticsearch (сбор логов)
-- Сервер Kibana (визуализация логов)
+Для развёртки инфраструктуры используйте Terraform и Ansible.  
 
-## Установка
-1. Создать сервисный аккаунт и скачать ключ:
-   ```bash
-   cp ~/Downloads/authorized_key.json ~/.authorized_key.json
-   ```
+Не используйте для ansible inventory ip-адреса! Вместо этого используйте fqdn имена виртуальных машин в зоне ".ru-central1.internal". Пример: example.ru-central1.internal  - для этого достаточно при создании ВМ указать name=example, hostname=examle !! 
 
-2. Заменить SSH ключ в terraform/cloud-init.yml на свой
+Важно: используйте по-возможности **минимальные конфигурации ВМ**:2 ядра 20% Intel ice lake, 2-4Гб памяти, 10hdd, прерываемая. 
 
-3. Указать cloud_id и folder_id в terraform/variables.tf
+**Так как прерываемая ВМ проработает не больше 24ч, перед сдачей работы на проверку дипломному руководителю сделайте ваши ВМ постоянно работающими.**
 
-4. Инициализировать Terraform:
-   ```bash
-   cd terraform
-   terraform init
-   ```
+Ознакомьтесь со всеми пунктами из этой секции, не беритесь сразу выполнять задание, не дочитав до конца. Пункты взаимосвязаны и могут влиять друг на друга.
 
-5. Применить конфигурацию:
-   ```bash
-   terraform apply
-   ```
+Развертка инфраструктуры
 
-6. Настроить серверы с помощью Ansible:
-   ```bash
-   cd ../ansible
-   ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook site.yml
-   ```
+![РазверткаИнфрыTerraformСкриншот1](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A0%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D0%BA%D0%B0%D0%98%D0%BD%D1%84%D1%80%D1%8BTerraform%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%821.png)
+![РазверткаИнфрыTerraformСкриншот2](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A0%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D0%BA%D0%B0%D0%98%D0%BD%D1%84%D1%80%D1%8BTerraform%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%822.png)
+![УстановкаСофтаСкриншот1](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%D0%A1%D0%BE%D1%84%D1%82%D0%B0%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%821.png)
+![УстановкаСофтаСкриншот2](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%D0%A1%D0%BE%D1%84%D1%82%D0%B0%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%822.png)
+![УстановкаСофтаСкриншот3](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%D0%A1%D0%BE%D1%84%D1%82%D0%B0%D0%A1%D0%BA%D1%80%D0%B8%D1%88%D0%BE%D1%823.png)
+![УстановкаСофтаСкриншот4](https://github.com/Easyjetz/diplom-project/blob/main/screen/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%D0%A1%D0%BE%D1%84%D1%82%D0%B0%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%824.png)
 
-## Доступ
-- Веб-сайт: через балансировщик (IP создается отдельно)
-- Zabbix: http://<public_ip_zabbix>/zabbix
-- Kibana: http://<public_ip_kibana>:5601
 
-## Уничтожение инфраструктуры
-```bash
-cd terraform
-terraform destroy
-```
+
+
+
+
+
+
+
+### Сайт
+Создайте две ВМ в разных зонах, установите на них сервер nginx, если его там нет. ОС и содержимое ВМ должно быть идентичным, это будут наши веб-сервера.
+
+Используйте набор статичных файлов для сайта. Можно переиспользовать сайт из домашнего задания.
+
+Виртуальные машины не должны обладать внешним Ip-адресом, те находится во внутренней сети. Доступ к ВМ по ssh через бастион-сервер. Доступ к web-порту ВМ через балансировщик yandex cloud.
+
+Настройка балансировщика:
+
+1. Создайте [Target Group](https://cloud.yandex.com/docs/application-load-balancer/concepts/target-group), включите в неё две созданных ВМ.
+
+2. Создайте [Backend Group](https://cloud.yandex.com/docs/application-load-balancer/concepts/backend-group), настройте backends на target group, ранее созданную. Настройте healthcheck на корень (/) и порт 80, протокол HTTP.
+
+3. Создайте [HTTP router](https://cloud.yandex.com/docs/application-load-balancer/concepts/http-router). Путь укажите — /, backend group — созданную ранее.
+
+4. Создайте [Application load balancer](https://cloud.yandex.com/en/docs/application-load-balancer/) для распределения трафика на веб-сервера, созданные ранее. Укажите HTTP router, созданный ранее, задайте listener тип auto, порт 80.
+
+Протестируйте сайт
+`curl -v <публичный IP балансера>:80` 
+
+### Мониторинг
+Создайте ВМ, разверните на ней Zabbix. На каждую ВМ установите Zabbix Agent, настройте агенты на отправление метрик в Zabbix. 
+
+Настройте дешборды с отображением метрик, минимальный набор — по принципу USE (Utilization, Saturation, Errors) для CPU, RAM, диски, сеть, http запросов к веб-серверам. Добавьте необходимые tresholds на соответствующие графики.
+
+### Логи
+Cоздайте ВМ, разверните на ней Elasticsearch. Установите filebeat в ВМ к веб-серверам, настройте на отправку access.log, error.log nginx в Elasticsearch.
+
+Создайте ВМ, разверните на ней Kibana, сконфигурируйте соединение с Elasticsearch.
+
+### Сеть
+Разверните один VPC. Сервера web, Elasticsearch поместите в приватные подсети. Сервера Zabbix, Kibana, application load balancer определите в публичную подсеть.
+
+Настройте [Security Groups](https://cloud.yandex.com/docs/vpc/concepts/security-groups) соответствующих сервисов на входящий трафик только к нужным портам.
+
+Настройте ВМ с публичным адресом, в которой будет открыт только один порт — ssh.  Эта вм будет реализовывать концепцию  [bastion host]( https://cloud.yandex.ru/docs/tutorials/routing/bastion) . Синоним "bastion host" - "Jump host". Подключение  ansible к серверам web и Elasticsearch через данный bastion host можно сделать с помощью  [ProxyCommand](https://docs.ansible.com/ansible/latest/network/user_guide/network_debug_troubleshooting.html#network-delegate-to-vs-proxycommand) . Допускается установка и запуск ansible непосредственно на bastion host.(Этот вариант легче в настройке)
+
+Исходящий доступ в интернет для ВМ внутреннего контура через [NAT-шлюз](https://yandex.cloud/ru/docs/vpc/operations/create-nat-gateway).
+
+### Резервное копирование
+Создайте snapshot дисков всех ВМ. Ограничьте время жизни snaphot в неделю. Сами snaphot настройте на ежедневное копирование.
+
+
+
