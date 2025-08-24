@@ -1,0 +1,13 @@
+---
+- name: Установка Nginx посл. версии
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: Создание HTML-странички
+  copy: 
+    src: index.html 
+    dest: /var/www/html/index.html
+    owner: root
+    group: sudo

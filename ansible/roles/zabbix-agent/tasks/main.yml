@@ -1,0 +1,31 @@
+---
+- name: Загрузка Zabbix репозитория
+  get_url:
+    url: https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu22.04_all.deb
+    dest: /tmp/zabbix-release.deb
+
+- name: Установка Zabbix репозитория
+  apt:
+    deb: /tmp/zabbix-release.deb
+
+- name: Обновление пакетов
+  apt:
+    update_cache: yes
+
+- name: Установка агента для Zabbix
+  apt:
+    name:
+    - zabbix-agent
+    state: present
+
+- name: Подключаем к нашему серверу
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    regexp: '^Server=127.0.0.1'
+    line: 'Server=zabbix.ru-central1.internal'
+
+- name: Перезагрузка Zabbix агента
+  ansible.builtin.systemd:
+    name: zabbix-agent
+    state: restarted
+    enabled: true

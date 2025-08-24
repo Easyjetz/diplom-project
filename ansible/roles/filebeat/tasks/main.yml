@@ -1,0 +1,19 @@
+---
+- name: Загрузка filebeat из репозитория
+  get_url:
+    url: https://mirror.yandex.ru/mirrors/elastic/7/pool/main/f/filebeat/filebeat-7.17.9-amd64.deb
+    dest: /tmp/filebeat-7.17.9-amd64.deb
+
+- name: Установка filebeat
+  apt:
+    deb: /tmp/filebeat-7.17.9-amd64.deb
+
+- name: Обновление пакетов
+  apt:
+    update_cache: yes
+
+- name: Перезагрузка Filebeat
+  ansible.builtin.systemd:
+    name: filebeat
+    state: restarted
+    enabled: true

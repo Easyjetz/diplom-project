@@ -1,0 +1,6 @@
+**/.terraform/*
+*.tfstate*
+terraform.tfvars
+.terraformrc
+authorized_key.json
+ansible/hosts.ini

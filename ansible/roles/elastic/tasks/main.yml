@@ -1,0 +1,21 @@
+---
+- name: Загрузка Elastic из репозитория
+  get_url:
+    url: https://mirror.yandex.ru/mirrors/elastic/7/pool/main/e/elasticsearch/elasticsearch-7.17.9-amd64.deb
+    dest: /tmp/elasticsearch-7.17.9-amd64.deb
+
+- name: Установка Elastic
+  apt:
+    deb: /tmp/elasticsearch-7.17.9-amd64.deb
+
+- name: Обновление пакетов и установка openjdk
+  apt:
+    name: openjdk-17-jdk
+    state: latest
+    update_cache: yes
+
+- name: Перезагрузка Elastic
+  ansible.builtin.systemd:
+    name: elasticsearch
+    state: restarted
+    enabled: true

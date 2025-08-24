@@ -1,0 +1,19 @@
+---
+- name: Загрузка Kibana из репозитория
+  get_url:
+    url: https://mirror.yandex.ru/mirrors/elastic/7/pool/main/k/kibana/kibana-7.17.9-amd64.deb
+    dest: /tmp/kibana-7.17.9-amd64.deb
+
+- name: Установка Kibana
+  apt:
+    deb: /tmp/kibana-7.17.9-amd64.deb
+
+- name: Обновление пакетов
+  apt:
+    update_cache: yes
+
+- name: Перезагрузка Kibana
+  ansible.builtin.systemd:
+    name: kibana
+    state: restarted
+    enabled: true

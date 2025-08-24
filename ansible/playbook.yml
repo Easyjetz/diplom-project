@@ -1,0 +1,36 @@
+---
+- name: Nginx
+  hosts: webservers
+  become: true
+  roles:
+    - nginx
+
+- name: Zabbix
+  hosts: zabbix
+  become: true
+  roles:
+    - zabbix
+
+- name: zabbix-agent
+  hosts: monitoring:children
+  become: true
+  roles:
+    - zabbix-agent
+
+- name: Elastic
+  hosts: elastic
+  become: true
+  roles:
+    - elastic
+
+- name: Kibana
+  hosts: kibana
+  become: true
+  roles:
+    - kibana
+
+- name: Filebeat
+  hosts: webservers
+  become: true
+  roles:
+    - filebeat
